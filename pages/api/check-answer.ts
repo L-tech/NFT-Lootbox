@@ -1,9 +1,12 @@
 import quizQuestions from "../../lib/questions";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { ethers, BigNumber } from "ethers"; 
 
 export type CheckAnswerPayload = {
   questionIndex: number;
   answerIndex: number;
+  message: string;
+  signedMessage: string;
 };
 
 type ErrorResponse = {
@@ -47,6 +50,16 @@ export default async function Open(
   }
 
   const body = req.body as CheckAnswerPayload;
+  let address = ""
+  try {
+    address = ethers.utils.verifyMessage(body.message, body.signedMessage)
+  } catch (err) {
+    res.status(400).json({
+      kind: "error",
+      error: `Unable to verify message: ${err}`,
+    });
+    return;
+  }
 
   // Validate the question index is valid
   if (body.questionIndex >= quizQuestions.length) {
