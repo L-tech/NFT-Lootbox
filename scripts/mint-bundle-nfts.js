@@ -12,7 +12,7 @@ async function main() {
             metadata: {
                 name: "Tesla Model 3",
                 description: "A pretty fancy car!",
-                image: readFileSync("./assets/tesla-model3.jpeg"),
+                image: readFileSync("./assets/tesla-model3.jpg"),
                 properties: {
                     rarity: "a bit rare",
                     fanciness: 7,
@@ -24,7 +24,7 @@ async function main() {
             metadata: {
                 name: "Porsche 911",
                 description: "A pretty fancy car!",
-                image: readFileSync("./assets/porsche-911.jpeg"),
+                image: readFileSync("./assets/porsche-911.jpg"),
                 properties: {
                     rarity: "a bit rare",
                     fanciness: 7,
@@ -36,7 +36,7 @@ async function main() {
             metadata: {
                 name: "Mclaren P1",
                 description: "A super fancy car!",
-                image: readFileSync("./assets/mclaren-p1.jpeg"),
+                image: readFileSync("./assets/mclaren-p1.jpg"),
                 properties: {
                     rarity: "super rare!",
                     fanciness: 10,
