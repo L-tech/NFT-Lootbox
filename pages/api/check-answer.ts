@@ -1,6 +1,8 @@
 import quizQuestions from "../../lib/questions";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { ethers, BigNumber } from "ethers"; 
+import { packAddress } from "../../lib/contractAddresses";
+import { ThirdwebSDK } from "@3rdweb/sdk";
 
 export type CheckAnswerPayload = {
   questionIndex: number;
@@ -83,9 +85,22 @@ export default async function Open(
 
   // If we get here then the answer was correct
 
-  // TODO: send the reward!
-
+  const sdk = new ThirdwebSDK(
+    new ethers.Wallet(
+      process.env.WALLET_PRIVATE_KEY as string,
+      // Using Polygon Mumbai network
+      ethers.getDefaultProvider("https://rpc-mumbai.maticvigil.com")
+    ),
+  );
+  
+  // Transfer a copy of the pack to the user
+  console.log(`Transferring a pack to ${address}...`);
+  const packModule = sdk.getPackModule(packAddress);
+  const packTokenId = '0';
+  // Note that this is async
+  packModule.transfer(address, packTokenId, BigNumber.from(1));
+  
   res.status(200).json({
-    kind: "correct",
+    kind: 'correct',
   });
 }
